@@ -8,7 +8,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [
     vue(),
-    vueDevTools(),
+    base: process.env.NODE_ENV === 'production' ? '/nyany/' : '/',
   ],
   resolve: {
     alias: {
