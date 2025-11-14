@@ -5,15 +5,25 @@
     <div class="player-input-section">
       <h2>プレイヤー情報入力 (10人)</h2>
       <div id="playerInputs" class="player-grid">
-        <PlayerInput v-for="player in players" :key="player.id" :player="player" />
+        <PlayerInput
+          v-for="player in players"
+          :key="player.id"
+          :player="player"
+        />
       </div>
     </div>
 
     <button @click="balanceTeams">チームを振り分ける！</button>
 
-    <div v-if="teamCombinations.length > 0" id="teamResults" class="team-results-area">
+    <div
+      v-if="teamCombinations.length > 0"
+      id="teamResults"
+      class="team-results-area"
+    >
       <h2>チーム分け結果</h2>
-      <p class="info-text">表示されるチーム分けの中から、合計LP差が最も小さいものを選びましょう。</p>
+      <p class="info-text">
+        表示されるチーム分けの中から、合計LP差が最も小さいものを選びましょう。
+      </p>
       <div id="teamCombinations" class="team-combinations-grid">
         <TeamCombination
           v-for="(combo, index) in teamCombinations"
@@ -28,9 +38,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import PlayerInput from './components/PlayerInput.vue';
-import TeamCombination from './components/TeamCombination.vue';
+import { ref, onMounted } from "vue";
+import PlayerInput from "./components/PlayerInput.vue";
+import TeamCombination from "./components/TeamCombination.vue";
 
 const playerCount = 10;
 const players = ref([]); // 全プレイヤーデータ (リアクティブ)
@@ -44,7 +54,7 @@ const initializePlayerInputs = () => {
       name: `プレイヤー${i}`,
       rank: "GOLD_4", // デフォルトランク
       lp: 0,
-      totalLP: 0 // PlayerInput.vueで初期計算されます
+      totalLP: 0, // PlayerInput.vueで初期計算されます
     });
   }
 };
@@ -62,7 +72,7 @@ const getAllCombinations = (arr, k) => {
   const result = [];
   function combinations(offset, combo) {
     if (combo.length === k) {
-      result.push(combo); 
+      result.push(combo);
       return;
     }
     for (let i = offset; i < arr.length; i++) {
@@ -84,8 +94,8 @@ const balanceTeams = () => {
       }
     }
     if (isNaN(player.totalLP)) {
-        alert("LPの計算にエラーが発生しました。入力値を確認してください。");
-        return;
+      alert("LPの計算にエラーが発生しました。入力値を確認してください。");
+      return;
     }
   }
 
@@ -97,15 +107,21 @@ const balanceTeams = () => {
   const balancedResults = [];
 
   for (const team1 of allPossibleCombinations) {
-    const remainingPlayers = players.value.filter(p => !team1.includes(p));
+    const remainingPlayers = players.value.filter((p) => !team1.includes(p));
     // チーム2はIDでソートして、組み合わせのキー生成の順序を安定させる
-    const team2 = remainingPlayers.slice().sort((a, b) => a.id - b.id); 
+    const team2 = remainingPlayers.slice().sort((a, b) => a.id - b.id);
 
     const team1TotalLP = team1.reduce((sum, p) => sum + p.totalLP, 0);
     const team2TotalLP = team2.reduce((sum, p) => sum + p.totalLP, 0);
     const difference = Math.abs(team1TotalLP - team2TotalLP);
 
-    balancedResults.push({ team1, team2, team1TotalLP, team2TotalLP, difference });
+    balancedResults.push({
+      team1,
+      team2,
+      team1TotalLP,
+      team2TotalLP,
+      difference,
+    });
   }
 
   // 3. LP差でソート
@@ -117,35 +133,44 @@ const balanceTeams = () => {
   const maxCombinationsToDisplay = 9;
   let currentProcessedIndex = 0;
 
-  while (finalCombinationsToShow.length < maxCombinationsToDisplay && currentProcessedIndex < balancedResults.length) {
-      const currentDifference = balancedResults[currentProcessedIndex].difference;
-      const combinationsAtCurrentDifference = [];
+  while (
+    finalCombinationsToShow.length < maxCombinationsToDisplay &&
+    currentProcessedIndex < balancedResults.length
+  ) {
+    const currentDifference = balancedResults[currentProcessedIndex].difference;
+    const combinationsAtCurrentDifference = [];
 
-      for (let i = currentProcessedIndex; i < balancedResults.length; i++) {
-          if (balancedResults[i].difference === currentDifference) {
-              combinationsAtCurrentDifference.push(balancedResults[i]);
-          } else {
-              break;
-          }
+    for (let i = currentProcessedIndex; i < balancedResults.length; i++) {
+      if (balancedResults[i].difference === currentDifference) {
+        combinationsAtCurrentDifference.push(balancedResults[i]);
+      } else {
+        break;
       }
+    }
 
-      shuffleArray(combinationsAtCurrentDifference);
+    shuffleArray(combinationsAtCurrentDifference);
 
-      for (const combo of combinationsAtCurrentDifference) {
-          // チームメンバーのIDをソートして組み合わせのキーを作成 (順序に依存しないように)
-          const sortedIDs1 = combo.team1.map(p => p.id).sort((a, b) => a - b).join(',');
-          const sortedIDs2 = combo.team2.map(p => p.id).sort((a, b) => a - b).join(',');
-          const combinationKey = [sortedIDs1, sortedIDs2].sort().join('|');
+    for (const combo of combinationsAtCurrentDifference) {
+      // チームメンバーのIDをソートして組み合わせのキーを作成 (順序に依存しないように)
+      const sortedIDs1 = combo.team1
+        .map((p) => p.id)
+        .sort((a, b) => a - b)
+        .join(",");
+      const sortedIDs2 = combo.team2
+        .map((p) => p.id)
+        .sort((a, b) => a - b)
+        .join(",");
+      const combinationKey = [sortedIDs1, sortedIDs2].sort().join("|");
 
-          if (!seenCombinations.has(combinationKey)) {
-              seenCombinations.add(combinationKey);
-              finalCombinationsToShow.push(combo);
-              if (finalCombinationsToShow.length >= maxCombinationsToDisplay) {
-                  break;
-              }
-          }
+      if (!seenCombinations.has(combinationKey)) {
+        seenCombinations.add(combinationKey);
+        finalCombinationsToShow.push(combo);
+        if (finalCombinationsToShow.length >= maxCombinationsToDisplay) {
+          break;
+        }
       }
-      currentProcessedIndex += combinationsAtCurrentDifference.length;
+    }
+    currentProcessedIndex += combinationsAtCurrentDifference.length;
   }
 
   // 5. 最終表示順をLP差でソート
