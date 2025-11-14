@@ -1,0 +1,379 @@
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f8f8f8; /* ほぼ白 */
+    color: #333; /* 濃いグレーの文字 */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.container {
+    background-color: #ffffff; /* 純粋な白 */
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 影を柔らかく */
+    text-align: center;
+    max-width: 1400px; /* 適切な最大幅を設定 (例: 1400px) */
+    width: 95%; /* 画面幅の95%を使用し、マージンで中央寄せ */
+    margin-top: 50px;
+    margin-left: auto; /* 中央寄せに必須 */
+    margin-right: auto; /* 中央寄せに必須 */
+    width: 100%;
+    margin-top: 50px;
+}
+
+h1 {
+    color: #4caf50; /* リーグ・オブ・レジェンドの緑っぽい色 */
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+h2 {
+    color: #2196f3; /* 青系の色 */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #eee; /* 薄い線を追加 */
+    padding-bottom: 10px;
+}
+
+.player-input-section {
+    background-color: #f0f0f0; /* 薄いグレー */
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側に影 */
+}
+
+/* プレイヤー入力欄を5列2行にする */
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5列に固定 */
+    gap: 15px; /* 隙間を調整 */
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.player-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd; /* 薄いボーダー */
+}
+
+.player-input-group label {
+    font-size: 0.9em;
+    margin-bottom: 4px; /* 間隔を少し狭める */
+    color: #555;
+    font-weight: 600;
+}
+
+.player-input-group input[type='text'],
+.player-input-group input[type='number'],
+.player-input-group select {
+    width: 100%;
+    padding: 8px; /* パディングを少し減らす */
+    border: 1px solid #ccc; /* 薄いグレーのボーダー */
+    border-radius: 5px;
+    background-color: #fefefe; /* ほぼ白 */
+    color: #333;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    margin-bottom: 8px; /* 下に少しマージン */
+}
+
+.player-input-group select option {
+    background-color: #ffffff;
+    color: #333;
+}
+
+button {
+    background-color: #2196f3; /* 青系の色 */
+    color: white;
+    border: none;
+    padding: 15px 35px; /* ボタンのサイズを調整 */
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #1976d2; /* 少し濃い青 */
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.team-results-area {
+    background-color: #f0f0f0; /* 薄いグレー */
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側に影 */
+}
+
+.info-text {
+    font-size: 0.95em;
+    color: #666; /* 少し濃いグレー */
+    margin-bottom: 20px;
+}
+
+/* チーム組み合わせ表示のグリッドレイアウトを3列3行にする */
+.team-combinations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3列に固定 */
+    gap: 20px;
+    justify-content: center;
+}
+
+.team-combination {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; /* 薄いボーダー */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 影を柔らかく */
+    display: flex; /* flexboxで中身を制御 */
+    flex-direction: column; /* 縦並び */
+    justify-content: space-between; /* 要素を上下に配置 */
+}
+
+.team-combination h3 {
+    color: #4caf50; /* 緑系の色 */
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.team-display {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px; /* 間隔を調整 */
+    flex-wrap: wrap;
+    flex-grow: 1; /* 親要素の残りのスペースを埋める */
+}
+
+.team-card {
+    background-color: #f9f9f9; /* わずかにオフホワイト */
+    padding: 15px;
+    border-radius: 6px;
+    width: calc(50% - 7.5px); /* 2列表示に合わせた幅 */
+    box-sizing: border-box;
+    text-align: left;
+    border: 1px solid #eee; /* 薄いボーダー */
+    display: flex;
+    flex-direction: column;
+}
+
+.team-card.team-1 {
+    border: 2px solid #2196f3;
+} /* 青チーム */
+.team-card.team-2 {
+    border: 2px solid #f44336;
+} /* 赤チーム */
+
+.team-card h4 {
+    color: #555;
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 5px;
+}
+
+.team-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* ulが残りのスペースを埋める */
+}
+
+.team-card li {
+    margin-bottom: 8px; /* プレイヤー名とランクの間に間隔 */
+    font-size: 0.95em;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: #fff; /* 文字色を白に */
+    font-weight: bold;
+    display: flex;
+    flex-direction: column; /* 縦並びにする */
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* 中央寄せ */
+}
+
+/* ランクごとの背景色 */
+.rank-IRON {
+    background-color: #6c757d;
+} /* Gray */
+.rank-BRONZE {
+    background-color: #cd7f32;
+} /* Brown */
+.rank-SILVER {
+    background-color: #c0c0c0;
+} /* Silver */
+.rank-GOLD {
+    background-color: #ffd700;
+} /* Gold */
+.rank-PLATINUM {
+    background-color: #00bcd4;
+} /* Cyan */
+.rank-EMERALD {
+    background-color: #28a745;
+} /* Green */
+.rank-DIAMOND {
+    background-color: #007bff;
+} /* Blue */
+.rank-MASTER {
+    background-color: #9370db;
+} /* MediumPurple */
+.rank-GRANDMASTER {
+    background-color: #dc3545;
+} /* Red */
+.rank-CHALLENGER {
+    background-color: #ffaa00;
+    color: #333;
+} /* Orange-gold, Challengerのみ文字色を黒に */
+
+.point-difference {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 15px;
+    color: #4caf50; /* 緑系の色 */
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* ボタン間のスペース */
+    margin-top: 15px;
+    flex-wrap: wrap; /* ボタンが多すぎるときに折り返す */
+}
+
+/* 昇格・降格ボタンの共通スタイル */
+.team-combination .promote-button,
+.team-combination .demote-button {
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-flex; /* アイコンとテキストを横並びにする */
+    align-items: center; /* 垂直方向中央揃え */
+    gap: 5px; /* アイコンとテキストの間隔 */
+}
+
+.team-combination .promote-button {
+    background-color: #4caf50; /* 緑 */
+}
+.team-combination .demote-button {
+    background-color: #f44336; /* 赤 */
+}
+
+/* コピーボタンのスタイル調整 */
+.team-combination .copy-image-button {
+    background-color: #ffc107; /* 黄色系 */
+    color: #333;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-flex; /* アイコンとテキストを横並びにする */
+    align-items: center; /* 垂直方向中央揃え */
+    gap: 5px; /* アイコンとテキストの間隔 */
+    justify-content: center; /* テキストとアイコンを中央寄せ */
+    width: auto; /* 幅を自動調整 */
+    margin: 15px auto 0; /* 中央寄せ */
+}
+
+.team-combination button:hover {
+    filter: brightness(1.1); /* ホバーで少し明るく */
+    transform: translateY(-1px);
+}
+.team-combination button:active {
+    transform: translateY(0);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1200px) {
+    /* 1200px以下でプレイヤー入力欄を4列に */
+    .player-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    /* 992px以下でチーム組み合わせを2列に、プレイヤー入力欄を3列に */
+    .team-combinations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .player-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    /* 768px以下で全て1列に */
+    .container {
+        padding: 20px 25px;
+        margin-top: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+
+    .player-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        width: 100%;
+    }
+
+    .team-combinations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
